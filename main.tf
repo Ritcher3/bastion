@@ -4,6 +4,16 @@ resource "aws_iam_instance_profile" "bastion_host_profile" {
   tags = var.tags
 }
 
+resource "aws_s3_bucket" "bastion_logs" {
+  count = var.create_bastion_logs_bucket ? 1 : 0
+  bucket = var.bucket_name
+ 
+  tags = {
+    Name        = "bastion_logs"
+    Environment = "prod"
+  }
+}
+
 resource "aws_iam_role" "bastion_iam_role" {
   name                 = var.bastion_iam_role
   assume_role_policy   = data.aws_iam_policy_document.assume_policy_document.json
@@ -81,9 +91,14 @@ resource "aws_security_group" "bastion" {
   vpc_id      = var.vpc_id
 }
 
-data "aws_key_pair" "bastion" {
-  key_pair_id        = "key-06fc9525b0299e79f"
-  include_public_key = true
+resource "tls_private_key" "bastion_key" {
+  algorithm = "RSA"
+  rsa_bits  = 2048
+}
+
+resource "aws_key_pair" "bastion_key" {
+  key_name   = "bastion-key"
+  public_key = tls_private_key.bastion_key.public_key_openssh
 }
 
 resource "aws_autoscaling_group" "bastion" {

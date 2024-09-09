@@ -9,6 +9,13 @@ variable "region" {
   default     = "data.aws_region.current.name" #defaults to whatever region is currently selected
 }
 
+
+variable "create_bastion_logs_bucket" {
+  type        = bool
+  description = "Bucket name where the bastion will store the logs"
+  default     = ""
+}
+
 variable "bucket_name" {
   type        = string
   description = "Bucket name where the bastion will store the logs"
@@ -78,9 +85,9 @@ variable "bastion_instance_count" {
   default     = 1
 }
 
-# data "aws_vpc" "main" {
-#   id = var.vpc_id
-# }
+  data "aws_vpc" "main" {
+   id = var.vpc_id
+ }
 
 variable "aws_launch_template_name" {
   type        = string
@@ -202,10 +209,10 @@ variable "http_endpoint" {
   default     = true
 }
 
-# variable "asg_name" {
-#   type        = string
-#   description = "ASG name"
-# }
+ variable "asg_name" {
+  type        = string
+  description = "ASG name"
+ }
 
 variable "availability_zones" {
   type        = string
