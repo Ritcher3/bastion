@@ -111,10 +111,10 @@ variable "name_prefix" {
   description = "prefix used for naming resources"
 }
 
-# variable "public_subnets" {
-#   type        = list(string)
-#   description = "Classless Inter-Domain Routing ranges for public subnets."
-# }
+ variable "public_subnets" {
+   type        = list(string)
+   description = "Classless Inter-Domain Routing ranges for public subnets."
+ }
 
 variable "associate_public_ip_address" {
   type        = bool
@@ -181,10 +181,10 @@ variable "kms_enable_key_rotation" {
   default     = false
 }
 
-# variable "bastion_host_profile" {
-#   type        = string
-#   description = "Name your instance profile"
-# }
+ variable "bastion_host_profile" {
+  type        = string
+  description = "Name your instance profile"
+ }
 
 variable "bastion_iam_role" {
   type        = string
@@ -198,10 +198,10 @@ variable "bastion_iam_permissions_boundary" {
   default     = ""
 }
 
-# variable "iam_instance_profile" {
-#   type        = string
-#   description = "Iam profile"
-# }
+ variable "iam_instance_profile" {
+   type        = string
+   description = "Iam profile"
+ }
 
 variable "http_endpoint" {
   type        = bool
