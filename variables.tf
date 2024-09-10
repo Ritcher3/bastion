@@ -13,8 +13,8 @@ variable "region" {
 
 variable "create_bastion_logs_bucket" {
   type        = bool
-  description = "Bucket name where the bastion will store the logs"
-  default     = ""
+  description = "Bucket name where the bastion will store the logs - Set to true by default"
+  default     = "true"
 }
 
 variable "bucket_name" {
