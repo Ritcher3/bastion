@@ -1,6 +1,7 @@
 variable "vpc_id" {
   type        = string
   description = "VPC ID where we'll deploy the bastion"
+  default = ""
 }
 
 variable "region" {
