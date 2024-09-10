@@ -1,12 +1,4 @@
 ################################################################################
-# VPC Module
-################################################################################
-
-module "vpc" {
-  source = "git::https://github.com/Ritcher3/vpc-1"
-}
-
-################################################################################
 # Resources
 ################################################################################
 
@@ -115,7 +107,7 @@ resource "aws_key_pair" "bastion_key" {
 
 resource "aws_autoscaling_group" "bastion" {
   name_prefix         = var.name_prefix
-  vpc_zone_identifier = [modules.aws_vpc.public_subnets]
+  vpc_zone_identifier = var.public_subnets
 
   launch_template {
     id = aws_launch_template.bastion_launch_template.id
