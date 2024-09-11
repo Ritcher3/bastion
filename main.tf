@@ -13,6 +13,17 @@ data "aws_iam_policy_document" "assume_policy_document" {
   }
 }
 
+data "aws_iam_policy_document" "bastion_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
 ################################################################################
 # Resources
 ################################################################################
@@ -48,7 +59,7 @@ resource "aws_iam_role_policy" "iam_bastion_policy" {
 
 resource "aws_launch_template" "bastion_launch_template" {
   name_prefix            = "${var.name_prefix}-bastion-"
-  image_id               = var.bastion_ami != "" ? var.bastion_ami : data.aws_ami.amazon-linux-2.id
+  image_id               = var.bastion_ami
   instance_type          = var.instance_type
   update_default_version = true
   monitoring {
