@@ -1,4 +1,19 @@
 ################################################################################
+# Data Sources
+################################################################################
+
+data "aws_iam_policy_document" "assume_policy_document" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+################################################################################
 # Resources
 ################################################################################
 
@@ -102,7 +117,7 @@ resource "tls_private_key" "bastion_key" {
 
 resource "aws_key_pair" "bastion_key" {
   key_name   = "bastion-key"
-  public_key = tls_private_key.bastion_key.public_key_openssh
+  public_key = var.bastion_host_key_pair
 }
 
 resource "aws_autoscaling_group" "bastion" {
