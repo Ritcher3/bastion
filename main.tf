@@ -117,7 +117,7 @@ resource "tls_private_key" "bastion_key" {
 
 resource "aws_key_pair" "bastion_key" {
   key_name   = "bastion-key"
-  public_key = var.bastion_host_key_pair
+  public_key = tls_private_key.bastion_key.public_key_openssh
 }
 
 resource "aws_autoscaling_group" "bastion" {
